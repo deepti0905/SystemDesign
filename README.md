@@ -6,10 +6,10 @@ It is impossible to solve the problem in 45 min interview. This is mainly to get
 # Things you should focus on
 1. Users/Customers -> who and how will they use our system
 2. Scale(read and write)-> How our system will handle a growing amount of data
-  How many read queries per second?
-  How much data is queried per request??
-  How many video views are processed per second?
-  Can there be spikes in traffic?
-    We must expect response from the interviewer on this or assume some value
+  a. How many read queries per second?
+  b. How much data is queried per request??
+  c. How many video views are processed per second?
+  d. Can there be spikes in traffic?
+    i. We must expect response from the interviewer on this or assume some value
 3. Performance -> How fast our system must be
 4. Cost -> Budget Constraints
