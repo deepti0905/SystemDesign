@@ -170,9 +170,21 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * Blocking systems are easy to operate and debug
 * Local variables can be used in the blocking systems
 
-##### Buffering
+##### Buffering & Batching
 
-##### Batching
+* Multiple input requests require multiple API Servers
+* To compensate for multiple API Servers, we may require multiple workers of processing servers.
+* This is expensive, alternate is we add a buffer where we keep adding data and once it reaches a optimum size it is batched to worker service.
+* Benefits is it increases throughput, it helps to save on cost, request.
+* Drawback, it introduces complexity on both client and server side.
+* e.g worker processes batch request, some part of it is success and some is failure. What should happen should request for complete batch or just failed events. I think this is dependent on the system
+
+##### Timeouts
+
+How much time client is ready to wait to get the response from the server. We have two types of Time outs
+* connection Timeout
+Client is ready to wait this much Time to establish a connection
+* request timeout
 
 
 
