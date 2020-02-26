@@ -94,6 +94,7 @@ Thanks to the creator of the video on how beautifully he explained the steps
 
 * For SQL-->  Data is normalized we keep different tables all of them have different ids as primary keep. There is no data duplication and joins are required for returning combination data.
 * For NOSQL--> Every information can stay as a blob or document and for every new info a new column can be added for that specific id.
+![SQL vs NSQL](https://github.com/deepti0905/SystemDesign/blob/master/SQLvsNOSQL.PNG)
 
 #### Types of NOSQL
 * Column
@@ -124,6 +125,7 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * To expedite the processing service can cache the writes and purge them to DB from time to time
 * What if Processing service dies in this push model. The data in processing service is lost.
 * Create Queue or temp service and processing service can poll it. Once processing service has information from the queue it can start acting on it. If Processing service crashes some other service can pick up **remember write ahead log**
+![Data Aggregation](https://github.com/deepti0905/SystemDesign/blob/master/Data_Aggregation.PNG)
 
 
 
