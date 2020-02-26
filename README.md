@@ -127,6 +127,35 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * Create Queue or temp service and processing service can poll it. Once processing service has information from the queue it can start acting on it. If Processing service crashes some other service can pick up **remember write ahead log**
 ![Data Aggregation](https://github.com/deepti0905/SystemDesign/blob/master/Data_Aggregation.PNG)
 
+#### Check Pointing
+* Queue to hold all input requests and then the data is commited in order
+* What if data input is large. Enters **partitioning**  more queues adding data to DB
+
+* Partition Shard gets messages
+* Partition consumer polls the message
+* Redis Cache to track last messages to avoid duplication
+* Aggregator to cummulate the messages, again uses some in memory store
+* output is then pushed to internal queue
+* Database writer polls the queue and writes to the Database.
+* If data from the db writer cannot be sent to DB.Either due to faults, network partitioning, delays, they go to dead letter queue.
+* The meta information for the processing can be present in Embedded Databases. These databases are present on the same machine as the processing service
+* state management--> maintains inmemory information incase of failure of machine which is running Processing service. We can resume from the db responsible for state management
+
+###Data Ingestion path
+
+* multiple queues or partitions
+* multiple processing services polling on the partitions
+* Partitioner Service --> divides data into partitions
+* Load Balancer --> evenly distribute load across multiple partition service
+* User APIGatewap to direct request to backend services machines
+
+
+
+
+
+
+
+
 
 
 
