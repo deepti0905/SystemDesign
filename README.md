@@ -72,7 +72,7 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * Till this point we have targeted **scalability** but not **availability**. What if one shard died? Enters **Read Replicas**
 * Read Replicas can be placed in another datacenter so that if one datacenter fails we have a backup and a failover strategy.
 * Data is either **synchronously or asynchronously synched** between master and read replicas
-
+![SQL DB](https://github.com/deepti0905/SystemDesign/blob/master/SQL_DB.PNG)
 
 **Points to note the above solution is not simple. we have leader/read replicas/ proxies/ config service etc**
 
@@ -85,7 +85,7 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * Node 4 can also direct requests to multiple nodes and can use quorum consensus to prove if data read/write was successful or not.
 * Similar behavior can be used for read as well.
 * For replication we can have a cassandra cluster in another data center as well.
-
+![NOSQL DB](https://github.com/deepti0905/SystemDesign/blob/master/NOSQL_DB.PNG)
 
 
 
