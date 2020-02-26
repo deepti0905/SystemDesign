@@ -184,11 +184,35 @@ Thanks to the creator of the video on how beautifully he explained the steps
 How much time client is ready to wait to get the response from the server. We have two types of Time outs
 * connection Timeout
 Client is ready to wait this much Time to establish a connection
+**this value usually 10ms**
 * request timeout
+Time client is ready to wait for a response from Request
+  * For this we try to analyze latency percentiles of the system
+  * 1% latency percentiles implies 1% of the requests to the system will timeout
+##### Retries
+* Lets say for the first request we hit a bad machine, chances are that for the next request we'll land on another machine increasing out chances of success
+* Be cautious of retries if all clients retry this will result in a retry storm event and will bring the system down.
 
+##### Exponential Backoff or jitter algorithm
+* With exponential retries, every next retry wait for exponential increase of time till it reaches a maximum cutoff
+* With Jitter the retry wait is random
+* If the worker service is down almost all request will be retries and irrespective of the algorithm used it will bring the system down.
 
-
+##### Circuit Breaker
+* If we find that total number of errors for a service is beyond a threshold we can stop calling the downstream service.
+   * This makes system difficult to test and ste proper thresholds and timers
+ 
 #### Load Balancer
+##### H/W LB
+* Are network devices we buy from organizations
+* Powerfull machines designed to handle high throughput
+
+##### S/W LB
+* s/w we install on commodity h/w
+* Most of them are open source. We don't need big machines
+*  ELB from Amazon is also a LB
+50:20 continue
+
 #### Partitioner Service and Partitions
 
 
