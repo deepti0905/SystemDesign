@@ -143,7 +143,7 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * The meta information for the processing can be present in Embedded Databases. These databases are present on the same machine as the processing service
 * state management--> maintains inmemory information incase of failure of machine which is running Processing service. We can resume from the db responsible for state management
 
-###Data Ingestion path
+### Data Ingestion path
 
 * multiple queues or partitions
 * multiple processing services polling on the partitions
@@ -151,6 +151,34 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * Load Balancer --> evenly distribute load across multiple partition service
 * User APIGatewap to direct request to backend services machines
 ![Data Ingestion](https://github.com/deepti0905/SystemDesign/blob/master/Data_Ingestion.PNG)
+
+### Ingestion path components
+#### Partitioner Service Client
+##### Blocking IO
+* One request opens one socket on the server. By that one socket is blocked on the server side
+* This happens within a single execution thread. So the thread that handles that connection is blocked as well.
+* Another client's request will require another thread to be created
+* Above is how blocking system works.
+* Let's say server starts to observe a slow down as the number of threads have increased on the system.
+* This can result in bringing down the entire cluser **death spiral**
+* Enters **Rate Limiter**, we can limit the number of request/connections per user.
+##### NonBlocking IO
+* single thread on the server side to handle multiple concurrent connections
+* excessive requests can be piled up on a queue. Piling up queue is far less expensive than pilling up threads.
+* Non Blocking systems are more efficient and results in higher throughput
+**So why dnt we just use Non Blocking systems?**
+* Blocking systems are easy to operate and debug
+* Local variables can be used in the blocking systems
+
+##### Buffering
+
+##### Batching
+
+
+
+#### Load Balancer
+#### Partitioner Service and Partitions
+
 
 
 
