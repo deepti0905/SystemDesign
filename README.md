@@ -36,6 +36,64 @@ It is impossible to solve the problem in 45 min interview. This is mainly to get
     
 # Now time for a simple design on the board
 ![Basic Diagram](https://github.com/deepti0905/SystemDesign/blob/master/Basic%20diagram.PNG)
+
+**At this point it is possible that interviewer can go bonkers and start pushing in terms of topic he/she knows the most. It is in your interest to drive this conversation and move interviewer to different direction, which in most cases is data... what data we are saving and how?**
+
+# Enters the Data Modeling section
+* What we are storing
+* Different tables.
+**Be ready with different types of tables, what is the advantage/disadvantage of each. You can even as interviewer's opinion here on what they prefer. If no opinion have you own thought process ready on why you choose one over the other**
+
+## Where we store
+* How to **scale writes**?
+* How to **scale reads**?
+* How to make both **writes and reads fast**?
+* How to **not lose data** in case of hardware faults and network partitions?
+* How to achieve **strong consistency**? What are the tradeoffs?
+* How to **recover data** in case of outage?
+* How to ensure **data security**?
+* How to make it **extensible** for data model changes in the future?
+
+### Scaling SQL DataBases
+Thanks to the creator of the video on how beautifully he explained the steps
+* Things are simple when we can save every thing in on one server
+* More data implies data needs to be spread across multiple servers. Enters **Sharding**
+* We have processing service that stores data in the database and query service that retreives data from the database
+* But how do these services know which shard to pick data. Enters a **proxy service** which knows where to pick what data
+* This relieves pressure on processing/query service to know where to pick data and puts the entire load on the proxy service.
+* Now how will proxy service know if a shard died or a new server is added to the cluster. Enters a **configuration service (Zookeeper)**. 
+* Configuration service maintains health check connection to all servers so that it knows what db machines are available
+* Now we are maintaining db handles in the cluster proxy. Enters **shard Proxy**, a proxy server sitting on every shard.
+* Shard Proxy can do following
+  * Cache Results
+  * Terminate big queries
+  * Do Health checks
+  * Send performance metrics
+* Till this point we have targeted **scalability** but not **availability**. What if one shard died? Enters **Read Replicas**
+* Read Replicas can be placed in another datacenter so that if one datacenter fails we have a backup and a failover strategy.
+* Data is either **synchronously or asynchronously synched** between master and read replicas
+
+
+**Points to note the above solution is not simple. we have leader/read replicas/ proxies/ config service etc**
+
+### Scaling in NoSQL Databases
+* In NoSQL we also divide data into shards. But instead of leaders and followers we say every db is equal.
+* We no longer need the **configuration server** to get the state of shards. Instead shards talk to each other, enters **gossip protocol**.
+* To reduce network load it is not required that every shard talks to every other shard. Instead every shard talks to few nearby shards. Quickly information on shards is propagated across entire cluster
+* Processing Service will make a write request, we can use **round robin** to direct the request to any specific node.
+* Node 4 can direct the request to any node which as per consistent hashing is responsible for the specific key.
+* Node 4 can also direct requests to multiple nodes and can use quorum consensus to prove if data read/write was successful or not.
+* Similar behavior can be used for read as well.
+* For replication we can have a cassandra cluster in another data center as well.
+
+
+
+
+
+
+
+
+
    
 
 
