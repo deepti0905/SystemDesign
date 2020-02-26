@@ -88,6 +88,51 @@ Thanks to the creator of the video on how beautifully he explained the steps
 ![NOSQL DB](https://github.com/deepti0905/SystemDesign/blob/master/NOSQL_DB.PNG)
 
 
+**Points worth mentioning here is consistency. If we choose availability over consistency we prefer to show stale data instead of not showing data at all. For consistency synchronous replication is used which is slow**
+
+### How we store
+
+* For SQL-->  Data is normalized we keep different tables all of them have different ids as primary keep. There is no data duplication and joins are required for returning combination data.
+* For NOSQL--> Every information can stay as a blob or document and for every new info a new column can be added for that specific id.
+
+#### Types of NOSQL
+* Column
+  * cassandra (is Fault tolerant, wide column, master less, supports cross data center replication)
+  * Hbase (has master slave replication)
+* Value
+* Key Value
+  * Couch DB
+  * Rocks DB
+* Document
+  * MongoDB (uses leader based replication)
+* Graph
+  * Neo4j
+  
+# Components
+## Processing Service
+**Rember all the requirements you have listed before and focus on following points**
+* How to **scale**
+  * Remember partitioning
+* How to achieve **high throughput**
+  * In Memory
+* How **not to lose data** when node crashes occur
+  * Replication
+* What to do when db is **unavailabe** or **Slow**
+### Data Aggregation Basics
+
+* Users push data to Processing service and processing service writes to DB
+* To expedite the processing service can cache the writes and purge them to DB from time to time
+* What if Processing service dies in this push model. The data in processing service is lost.
+* Create Queue or temp service and processing service can poll it. Once processing service has information from the queue it can start acting on it. If Processing service crashes some other service can pick up **remember write ahead log**
+
+
+
+
+ 
+
+
+
+
 
 
 
