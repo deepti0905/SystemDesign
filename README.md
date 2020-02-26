@@ -35,7 +35,7 @@ It is impossible to solve the problem in 45 min interview. This is mainly to get
 
     
 # Now time for a simple design on the board
-
+![Basic Diagram](https://github.com/deepti0905/SystemDesign/blob/master/Basic%20diagram.PNG)
    
 
 
