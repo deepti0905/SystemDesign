@@ -119,6 +119,8 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * How **not to lose data** when node crashes occur
   * Replication
 * What to do when db is **unavailabe** or **Slow**
+![processing service](https://github.com/deepti0905/SystemDesign/blob/master/Partition_Detailed_Design.PNG)
+
 ### Data Aggregation Basics
 
 * Users push data to Processing service and processing service writes to DB
@@ -148,7 +150,7 @@ Thanks to the creator of the video on how beautifully he explained the steps
 * Partitioner Service --> divides data into partitions
 * Load Balancer --> evenly distribute load across multiple partition service
 * User APIGatewap to direct request to backend services machines
-
+![Data Ingestion](https://github.com/deepti0905/SystemDesign/blob/master/Data_Ingestion.PNG)
 
 
 
