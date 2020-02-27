@@ -210,11 +210,54 @@ Time client is ready to wait for a response from Request
 ##### S/W LB
 * s/w we install on commodity h/w
 * Most of them are open source. We don't need big machines
-*  ELB from Amazon is also a LB
-50:20 continue
+*  ELB from Amazon is also a S/Q LB
+*Another gradation of LB is what traffic they serve TCP or UDP*
+##### TCP LB
+* TCP Load balancers once the connection is established maintain it and are able to provide response quite faster
+##### HTTP LB
+* HTTP LB can terminate connection
+* It can look inside a message and make load balancing decision based on the content
+  * based on the cookie information in the http message. LB may use several algorithms to distribute the load.
+  
+##### Algorithms
+* Round Robin
+* Least active connections
+* Least response time
+* Hash based redirection is based on the IP Addresses
+
+
+#### DNS
+DNS knows IP of LB, which is associated with the url of partitioning service
+LB knows IP of partitioning service
+
+**They need to do health checking of the servers**
+
+#### High availability ###
+Master slave architecture of the LB, this is done by using keepalived logic and assigning virtual IP Address
+
 
 #### Partitioner Service and Partitions
+##### Partition Strategy
+How to deal with hot partitions?
+* partition on the basis of time, all requests per current minute go to specific partition and after this minute will go to some other partition
+* Spit Hot partitions
+* use consistent hashing
 
+##### Service discovery
+* Server side discovery [DNS Load Balancers etc]
+* We dnt need a LB between partition service and partitions
+* partition service can itself act load balancer here and use consistent hashing to discover partitions.
+* 
+##### Client side 
+* every server registers to some common place service registry
+* Service registry is another highly available web service which can perform health checks
+* service registery can check health of servers
+* client can then query service registry and obtain list of available servers
+* e.g. is Zookeeper
+   * each partition registers itself with zookeeper
+   * partition service query zookeeper for the list of partitions
+   58:433
+   
 
 
 
