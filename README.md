@@ -366,7 +366,9 @@ Replication for Cassandra
   
 
 
-
+# My Synopsis
+|Client Side | Between Client and Load Balancer| Load Balancer| API Server| Broker Queues| Workers | Cache| Hot Storage| Cold Storage|
+||||||||||
 
 
 
