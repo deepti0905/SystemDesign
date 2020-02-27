@@ -289,7 +289,10 @@ Replication for Cassandra
      * then aggregating per min to per day to a month
      * Older data can be moved to Object Store
      * Most accessed data can be moved to a distributed cache (**redis cluster**)
+     ![Data Retreival](https://github.com/deepti0905/SystemDesign/blob/master/Data_Retreival.PNG)
      
+ ### Complete Data Simulation
+ ![Data Simulation](https://github.com/deepti0905/SystemDesign/blob/master/Data_Flow_Simulation.PNG)
      
 ### Technology Stack
 * Client Side
