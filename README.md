@@ -244,11 +244,11 @@ How to deal with hot partitions?
 * use consistent hashing
 
 ##### Service discovery
-* Server side discovery [DNS Load Balancers etc]
+###### Server side discovery [DNS Load Balancers etc]
 * We dnt need a LB between partition service and partitions
 * partition service can itself act load balancer here and use consistent hashing to discover partitions.
 * 
-##### Client side 
+###### Client side 
 * every server registers to some common place service registry
 * Service registry is another highly available web service which can perform health checks
 * service registery can check health of servers
@@ -256,8 +256,111 @@ How to deal with hot partitions?
 * e.g. is Zookeeper
    * each partition registers itself with zookeeper
    * partition service query zookeeper for the list of partitions
-   58:433
    
+##### Replication
+###### Single Leader
+Replication of SQL DB
+###### Multi Leader
+###### Leaderless 
+Replication for Cassandra
+
+##### Message Formats
+* Textual: XML, CSV, JSON
+   * Textual formats like JSON require field with every attribute making size of payload
+* Binary: Thrift, Protocol Buffers, Avro
+  * Messages in binary format are more compact and faster to parse.
+  * Binary format needs to predeclare schema, once schema is decided we no longer need to keep field names.
+  * Apache Thrift or Protocol Buffers use tags instead of field names. Tags are numbers and they act like aliases for fields.
+  * Tags take less space when encoded
+  * schema is crucial for binary formats
+  * Message producer or clients need to know the schema to serialize the data
+  * Message consumer need to know the schema to deserialize the data
+  * schemas are usually stored in some shared db, where producers and consumers can retreive them.
+  * schemas can change over time, we may want to add more attributes to messages
+  
+  
+  
+ ### Data Retreival path 
+ * Query service or the worker sits behind API Gateway
+ * We keep data in the data base which Query Service queries and returns
+     * In case of timeseries db we may find issues in keeping every thing in db
+     * Here we can start rolling up the data like purge 3 month old data
+     * First caching per timestamp
+     * then aggregating per min to per day to a month
+     * Older data can be moved to Object Store
+     * Most accessed data can be moved to a distributed cache (**redis cluster**)
+     
+     
+### Technology Stack
+* Client Side
+   * Netty
+   * Netflix Hystrix
+   * Polly
+* LB
+   * NetScalar --> HW
+   * NGINX
+   * AWS ELB
+* Messaging systems
+  * Apache Kafka
+  * AWS Kinesis
+* Data Processing
+  * Apache Spark
+  * Apache Flink
+  * AWS Kinesis Data Analytics
+* Storage
+  * Apache Cassandra - wide column 
+  * Apache HBase - wide column
+  * Apache Hadoop 
+  * Apache Redshift
+  * Vitess
+     * Manage clusters of MySQL
+  * Distributed Cache - Redis
+* RabbitMQ -> Holding dead letters
+* AWS SQS
+* Rocks DB --> High performant Key Value DB
+* Zookeeper --> Distributed configuration service
+* Netflix Eureka --> For service discovery
+* Monitoring
+   * AWS CloudWatch/ELK
+   * Elastic Search
+   * Logstash
+   * Kibana
+* Binary Message format - avro, thrift, protobuf
+* Hashing function for partitioning data - murmur hash
+
+### Bottlenecks, tradeoffs and more...
+* How to identify bottlenecks?
+   * Load testing--> to identify how system behaves under specific load.
+      * Identifies system is scalable and can handle the load we expect
+   * Stress testing --> Test beyond a normal operation capacity, often to breaking point
+      * Identifies a breaking point in the system- Memory, CPU, IOs
+   * Soak Testing --> Test system with a production payload for extended period of time.
+       * Find leaks in the resources
+   * Apache JMeter can be used for producing the desired load.
+   
+* Health Monitoring
+   * Keep measurng health -> metrics, dashboards, alerts should be our friend all the time.
+   * Metrics --> measurement of CPU usage, DIsk IOs, Response time etc
+   * Dashboards --> consolidated view of metrics
+   * Alerts --> is a notification sent to service owners in reaction to some issue happening
+   * Monitoring -> Latency, traffic, errors, saturation
+   
+* How to ensure that we get accurate results?
+  * Audit System
+     * Weak
+        * continously running end to end test
+        * validate the output
+        
+     * Strong
+        * Tries to verify the output with two alternate ways
+     * Lambda Architecture
+        * Uses Batch
+        * Uses Stream Processing both to verify the system
+  
+     
+  
+  
+  
 
 
 
