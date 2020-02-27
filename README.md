@@ -362,7 +362,7 @@ Replication for Cassandra
   
      
   
-  
+  ![Step By Step](https://github.com/deepti0905/SystemDesign/blob/master/step_by_step.PNG)
   
 
 
