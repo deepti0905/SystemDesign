@@ -389,7 +389,9 @@ Replication for Cassandra
 * Latency is dependent on provider and the location user is in, speed in a village is different from office
 
 ## Load Balancer
-
+* Network LB
+  * Network load balancer is designed to handler million requests/ second.
+* Software LB
 * Virtual Ips
   * Keep Alived
 * Master and Slave
@@ -426,6 +428,10 @@ Replication for Cassandra
 ## Cache
 * Think of distributed cache such as redis
 * zookeeper for concurrency issues
+* Latency Numbers
+| L1 Cache | L2 Cache | RAM | 1GB/s Network| SSD| SATA Disk|
+|----------|----------|-----|--------------|-----|----------|
+| 0.5ns    | 7ns or 14xL1|100ns or 20xL2 or 200xL1|10 ms or 40xRAM or 10xSSD| 1ms or 4xRAM|30ms or 120xRAM or 30xSSD|
 
 ## Hot Data
 * DB wil most accessed data
